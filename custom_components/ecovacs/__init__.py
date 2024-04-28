@@ -77,10 +77,15 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                 config[DOMAIN].get(CONF_VERIFY_SSL), # add to class call
                 monitor=True,
             )
-            devices.append(vacbot)
+            devices.append(vacbot)            
         return devices
 
     hass.data[ECOVACS_DEVICES] = await hass.async_add_executor_job(get_devices)
+    if hass.data[ECOVACS_DEVICES]:
+        LOGGER.debug("Starting vacuum components")
+        hass.async_create_task(
+            discovery.async_load_platform(hass, Platform.VACUUM, DOMAIN, {}, config)
+        )    
     return True     # Too Dirty ??
 
 async def async_stop(event: object) -> None:
@@ -96,10 +101,3 @@ async def async_stop(event: object) -> None:
     # Listen for HA stop to disconnect.
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop)
     return True
-
-if hass.data[ECOVACS_DEVICES]:
-    LOGGER.debug("Starting vacuum components")
-    hass.async_create_task(
-        discovery.async_load_platform(hass, Platform.VACUUM, DOMAIN, {}, config)
-    )
-
