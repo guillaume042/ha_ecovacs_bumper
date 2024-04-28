@@ -173,8 +173,31 @@ class EcovacsVacuum(StateVacuumEntity):
         **kwargs: Any,
     ) -> None:
         """Send a command to a vacuum cleaner."""
+        if command == 'spot_area':
+            if 'area' in params:
+                return self.clean_area(params['area'])
+            elif 'map' in params:
+                return self.clean_map(params['map'])    
         self.device.run(sucks.VacBotCommand(command, params))
+    
+def clean_map(self, map):
 
+        if not map:
+            self.clean_mode = 'auto'
+            self.device.run(sucks.Clean(mode=self.clean_mode, speed=self.fan_speed, action='start'))
+        else:
+            self.clean_mode = 'spot_area'
+            self.device.run(sucks.SpotArea(map_position=map, speed=self.fan_speed, action='start'))
+
+    def clean_area(self, area):        
+
+        if not area:
+            self.clean_mode = 'auto'
+            self.device.run(sucks.Clean(mode=self.clean_mode, speed=self.fan_speed, action='start'))
+        else:
+            self.clean_mode = 'spot_area'
+            self.device.run(sucks.SpotArea(area=area, speed=self.fan_speed, action='start'))
+            
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return the device-specific state attributes of this vacuum."""
