@@ -151,8 +151,9 @@ class EcovacsVacuum(StateVacuumEntity):
 
     def clean_spot(self, **kwargs: Any) -> None:
         """Perform a spot clean-up."""
-
-        self.device.run(sucks.Spot())
+        self.clean_mode = 'spot'
+        self.device.run(sucks.Spot(mode=self.clean_mode, speed=self.fan_speed, action='start'))        
+        #self.device.run(sucks.Spot())
 
     def locate(self, **kwargs: Any) -> None:
         """Locate the vacuum cleaner."""
