@@ -95,9 +95,11 @@ async def async_stop(event: object) -> None:
 
     # Listen for HA stop to disconnect.
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop)
-    if hass.data[ECOVACS_DEVICES]:
-        LOGGER.debug("Starting vacuum components")
-        hass.async_create_task(
-            discovery.async_load_platform(hass, Platform.VACUUM, DOMAIN, {}, config)
-        )
     return True
+
+if hass.data[ECOVACS_DEVICES]:
+    LOGGER.debug("Starting vacuum components")
+    hass.async_create_task(
+        discovery.async_load_platform(hass, Platform.VACUUM, DOMAIN, {}, config)
+    )
+
