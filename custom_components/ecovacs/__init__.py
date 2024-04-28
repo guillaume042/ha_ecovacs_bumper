@@ -58,12 +58,12 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         ecovacs_devices = ecovacs_api.devices()
         _LOGGER.debug("Ecobot devices: %s", ecovacs_devices)
 
-    SERVER_ADDRESS = None
-
+        SERVER_ADDRESS = None
+    
         devices: list[VacBot] = []
         for device in ecovacs_devices:
             _LOGGER.info(
-                "Discovered Ecovacs device on account: %s with nickname %s",
+            "Discovered Ecovacs device on account: %s with nickname %s",
                 device.get("did"),
                 device.get("nick"),
             )
@@ -77,9 +77,8 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                 config[DOMAIN].get(CONF_VERIFY_SSL), # add to class call
                 monitor=True,
             )
-
             devices.append(vacbot)
-        return devices
+    return devices
 
     hass.data[ECOVACS_DEVICES] = await hass.async_add_executor_job(get_devices)
 
