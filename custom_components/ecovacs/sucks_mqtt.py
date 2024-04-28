@@ -125,7 +125,7 @@ class EcoVacsIOTMQ(ClientMQTT):
         c = self._wrap_command(action, recipient)
         LOGGER.debug('Sending command {0}'.format(c))
         self._handle_ctl_api(action, 
-            self.__call_iotdevmanager_api(c ,verify_ssl=self.verify_ssl )
+            self.__call_iotdevmanager_api(c ,verify_ssl=False )
             )
         
     def _wrap_command(self, cmd, recipient):
