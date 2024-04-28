@@ -32,7 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_PASSWORD): cv.string,
                 vol.Required(CONF_COUNTRY): vol.All(vol.Lower, cv.string),
                 vol.Required(CONF_CONTINENT): vol.All(vol.Lower, cv.string),
-                vol.Optional(CONF_VERIFY_SSL, default=False): cv.boolean, # can probably get rid of this and set verify ssl false if (Let's do quick and dirty for try)
+                vol.Optional(CONF_VERIFY_SSL, default=True): cv.boolean, # can probably get rid of this and set verify ssl false if
             }
         )
     },
@@ -56,41 +56,42 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
             config[DOMAIN].get(CONF_CONTINENT),
         )
         ecovacs_devices = ecovacs_api.devices()
-        _LOGGER.debug("Ecobot devices: %s", ecovacs_devices)
+        LOGGER.debug("Ecobot devices: %s", ecovacs_devices)
 
-        SERVER_ADDRESS = None
-    
-        devices: list[VacBot] = []
-        for device in ecovacs_devices:
-            _LOGGER.info(
+    SERVER_ADDRESS = None
+
+    devices: list[VacBot] = []
+    for device in ecovacs_devices:
+        LOGGER.info(
             "Discovered Ecovacs device on account: %s with nickname %s",
-                device.get("did"),
-                device.get("nick"),
-            )
-            vacbot = VacBot(
-                ecovacs_api.uid,
-                ecovacs_api.REALM,
-                ecovacs_api.resource,
-                ecovacs_api.user_access_token,
-                device,
-                config[DOMAIN].get(CONF_CONTINENT).lower(),
-                config[DOMAIN].get(CONF_VERIFY_SSL), # add to class call
-                monitor=True,
-            )
-            devices.append(vacbot)
+            device.get("did"),
+            device.get("nick"),
+        )
+        vacbot = VacBot(
+            ecovacs_api.uid,
+            ecovacs_api.REALM,
+            ecovacs_api.resource,
+            ecovacs_api.user_access_token,
+            device,
+            config[DOMAIN].get(CONF_CONTINENT).lower(),
+            config[DOMAIN].get(CONF_VERIFY_SSL), # add to class call
+            monitor=True,
+        )
+
+        devices.append(vacbot)
         return devices
 
     hass.data[ECOVACS_DEVICES] = await hass.async_add_executor_job(get_devices)
 
-    async def async_stop(event: object) -> None:
-        """Shut down open connections to Ecovacs XMPP server."""
-        devices: list[VacBot] = hass.data[ECOVACS_DEVICES]
-        for device in devices:
-            LOGGER.info(
-                "Shutting down connection to Ecovacs device %s",
-                device.vacuum.get("did"),
-            )
-            await hass.async_add_executor_job(device.disconnect)
+async def async_stop(event: object) -> None:
+    """Shut down open connections to Ecovacs XMPP server."""
+    devices: list[VacBot] = hass.data[ECOVACS_DEVICES]
+    for device in devices:
+        LOGGER.info(
+            "Shutting down connection to Ecovacs device %s",
+            device.vacuum.get("did"),
+        )
+        await hass.async_add_executor_job(device.disconnect)
 
     # Listen for HA stop to disconnect.
     hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, async_stop)
