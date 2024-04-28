@@ -77,7 +77,6 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                 config[DOMAIN].get(CONF_VERIFY_SSL), # add to class call
                 monitor=True,
             )
-    
             devices.append(vacbot)
         return devices
 
