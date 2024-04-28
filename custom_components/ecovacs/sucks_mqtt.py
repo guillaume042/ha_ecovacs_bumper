@@ -38,7 +38,7 @@ def RepresentsInt(stringvar):
         return False
 
 class EcoVacsIOTMQ(ClientMQTT):
-    def __init__(self, user, domain, resource, secret, continent, vacuum, server_address=None, verify_ssl=True):
+    def __init__(self, user, domain, resource, secret, continent, vacuum, server_address=None, verify_ssl=False):
         ClientMQTT.__init__(self)
         self.ctl_subscribers = []
         self.user = user
@@ -50,17 +50,17 @@ class EcoVacsIOTMQ(ClientMQTT):
         self.scheduler = sched.scheduler(time.time, time.sleep)
         self.scheduler_thread = threading.Thread(target=self.scheduler.run, daemon=True, name="mqtt_schedule_thread")
         self.verify_ssl = str_to_bool_or_cert(verify_ssl)
-        if server_address is None:            
-            self.hostname = ('mq-{}.ecouser.net'.format(self.continent))
-            self.port = 8883
-        else:
-            saddress = server_address.split(":")
-            if len(saddress) > 1:
-                self.hostname = saddress[0]
-                if RepresentsInt(saddress[1]):
-                    self.port = int(saddress[1])
-                else:
-                    self.port = 8883
+        #if server_address is None:            # UBER DIRTY
+        self.hostname = ('mq-{}.ecouser.net'.format(self.continent))
+        self.port = 8883
+        #else:
+        #    saddress = server_address.split(":")
+        #    if len(saddress) > 1:
+        #        self.hostname = saddress[0]
+        #        if RepresentsInt(saddress[1]):
+        #            self.port = int(saddress[1])
+        #        else:
+        #            self.port = 8883
         self._client_id = self.user + '@' + self.domain.split(".")[0] + '/' + self.resource
         self.username_pw_set(self.user + '@' + self.domain, secret)
         self.ready_flag = Event()
