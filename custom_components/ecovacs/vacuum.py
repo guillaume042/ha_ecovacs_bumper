@@ -152,7 +152,7 @@ class EcovacsVacuum(StateVacuumEntity):
     def clean_spot(self, **kwargs: Any) -> None:
         """Perform a spot clean-up."""
         self.clean_mode = 'spot'
-        self.device.run(sucks.Spot(mode=self.clean_mode, speed=self.fan_speed, action='start'))        
+        self.device.run(sucks.Spot(mode=self.device.clean_status, speed=self.fan_speed))        
         #self.device.run(sucks.Spot())
 
     def locate(self, **kwargs: Any) -> None:
@@ -184,19 +184,19 @@ class EcovacsVacuum(StateVacuumEntity):
 
         if not map:
             self.clean_mode = 'auto'
-            self.device.run(sucks.Clean(mode=self.clean_mode, speed=self.fan_speed, action='start'))
+            self.device.run(sucks.Clean(mode=self.device.clean_status, speed=self.fan_speed))
         else:
             self.clean_mode = 'spot_area'
-            self.device.run(sucks.SpotArea(map_position=map, speed=self.fan_speed, action='start'))
+            self.device.run(sucks.SpotArea(map_position=map, speed=self.fan_speed))
 
     def clean_area(self, area):        
 
         if not area:
             self.clean_mode = 'auto'
-            self.device.run(sucks.Clean(mode=self.clean_mode, speed=self.fan_speed, action='start'))
+            self.device.run(sucks.Clean(mode=self.device.clean_status, speed=self.fan_speed))
         else:
             self.clean_mode = 'spot_area'
-            self.device.run(sucks.SpotArea(area=area, speed=self.fan_speed, action='start'))
+            self.device.run(sucks.SpotArea(area=area, speed=self.fan_speed))
             
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
