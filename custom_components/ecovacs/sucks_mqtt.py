@@ -157,7 +157,7 @@ class EcoVacsIOTMQ(ClientMQTT):
         url = (API_PORTAL_URL_FORMAT + "/" + API_IOTDEVMANAGERAPI).format(continent=self.continent)
         response = None        
         try: #The RestAPI sometimes doesnt provide a response depending on command, reduce timeout to 3 to accomodate and make requests faster
-            response = requests.post(url, json=params, timeout=3, verify=verify_ssl) #May think about having timeout as an arg that could be provided in the future
+            response = requests.post(url, json=params, timeout=3, verify=False) #May think about having timeout as an arg that could be provided in the future
         except requests.exceptions.ReadTimeout:
             LOGGER.debug("call to iotdevmanager failed with ReadTimeout")
             return {}
