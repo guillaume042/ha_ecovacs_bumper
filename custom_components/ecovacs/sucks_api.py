@@ -91,7 +91,7 @@ class EcoVacsAPI:
         params = OrderedDict(args)
         params['requestId'] = self.md5(time.time())
         url = (EcoVacsAPI.MAIN_URL_FORMAT + "/" + function).format(**self.meta)
-        api_response = requests.get(url, self.__sign(params), verify=self.verify_ssl)
+        api_response = requests.get(url, self.__sign(params), verify=False)
         json = api_response.json()
         LOGGER.debug("got {}".format(json))
         if json['code'] == '0000':
@@ -108,7 +108,7 @@ class EcoVacsAPI:
         LOGGER.debug("calling user api {} with {}".format(function, args))
         params = {'todo': function}
         params.update(args)
-        response = requests.post(EcoVacsAPI.USER_URL_FORMAT.format(continent=self.continent), json=params, verify=self.verify_ssl)
+        response = requests.post(EcoVacsAPI.USER_URL_FORMAT.format(continent=self.continent), json=params, verify=False)
         json = response.json()
         LOGGER.debug("got {}".format(json))
         if json['result'] == 'ok':
