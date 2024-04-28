@@ -82,6 +82,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
         return devices
 
     hass.data[ECOVACS_DEVICES] = await hass.async_add_executor_job(get_devices)
+    return True     # Too Dirty ??
 
 async def async_stop(event: object) -> None:
     """Shut down open connections to Ecovacs XMPP server."""
