@@ -180,7 +180,7 @@ class EcovacsVacuum(StateVacuumEntity):
                 return self.clean_map(params['map'])    
         self.device.run(sucks.VacBotCommand(command, params))
     
-def clean_map(self, map):
+    def clean_map(self, map):
 
         if not map:
             self.clean_mode = 'auto'
