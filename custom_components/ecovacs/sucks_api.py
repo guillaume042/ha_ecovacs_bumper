@@ -130,7 +130,7 @@ class EcoVacsAPI:
         if 'continent' in kwargs:
             continent = kwargs.get('continent')
         url = (EcoVacsAPI.PORTAL_URL_FORMAT + "/" + api).format(continent=continent, **self.meta)
-        response = requests.post(url, json=params, verify=verify_ssl)
+        response = requests.post(url, json=params, verify=False)
         json = response.json()
         LOGGER.debug("got {}".format(json))
         if api == self.USERSAPI:
@@ -140,10 +140,10 @@ class EcoVacsAPI:
                 if json['error'] == 'set token error.': # If it is a set token error try again
                     if not 'set_token' in kwargs:      
                         LOGGER.debug("loginByItToken set token error, trying again (2/3)")
-                        return self.__call_portal_api(self.USERSAPI, function, args, verify_ssl=verify_ssl, set_token=1)
+                        return self.__call_portal_api(self.USERSAPI, function, args, verify_ssl=False, set_token=1)
                     elif kwargs.get('set_token') == 1:
                         LOGGER.debug("loginByItToken set token error, trying again with ww (3/3)")
-                        return self.__call_portal_api(self.USERSAPI, function, args, verify_ssl=verify_ssl, set_token=2, continent="ww")
+                        return self.__call_portal_api(self.USERSAPI, function, args, verify_ssl=False, set_token=2, continent="ww")
                     else:
                         LOGGER.debug("loginByItToken set token error, failed after 3 attempts")
         if api.startswith(self.PRODUCTAPI):
