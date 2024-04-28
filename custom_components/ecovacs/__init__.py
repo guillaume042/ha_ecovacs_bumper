@@ -32,7 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Required(CONF_PASSWORD): cv.string,
                 vol.Required(CONF_COUNTRY): vol.All(vol.Lower, cv.string),
                 vol.Required(CONF_CONTINENT): vol.All(vol.Lower, cv.string),
-                vol.Optional(CONF_VERIFY_SSL, default=True): cv.boolean, # can probably get rid of this and set verify ssl false if
+                vol.Optional(CONF_VERIFY_SSL, default=False): cv.boolean, # can probably get rid of this and set verify ssl false if (Let's do quick and dirty for try)
             }
         )
     },
