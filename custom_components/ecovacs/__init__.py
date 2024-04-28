@@ -78,7 +78,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
                 monitor=True,
             )
             devices.append(vacbot)
-    return devices
+        return devices
 
     hass.data[ECOVACS_DEVICES] = await hass.async_add_executor_job(get_devices)
 
