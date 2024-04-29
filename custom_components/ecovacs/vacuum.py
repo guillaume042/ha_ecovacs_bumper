@@ -6,13 +6,14 @@ from typing import Any
 
 #sucks
 from . import sucks
+
+from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.icon import icon_for_battery_level
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
-
-from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
+from . import ECOVACS_DEVICES
 
 from homeassistant.components.vacuum import (
     ATTR_STATUS,
@@ -33,7 +34,7 @@ from homeassistant.components.vacuum import (
 #    
 #from homeassistant.components.vacuum import VacuumEntityFeature
 
-from . import ECOVACS_DEVICES
+
 
 _LOGGER = logging.getLogger(__name__)
 
