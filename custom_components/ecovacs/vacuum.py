@@ -12,7 +12,7 @@ from homeassistant.helpers.icon import icon_for_battery_level
 from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 
-#from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
+from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
 
 from homeassistant.components.vacuum import (
     ATTR_STATUS,
@@ -25,12 +25,13 @@ from homeassistant.components.vacuum import (
     SUPPORT_FAN_SPEED,
     VacuumEntity,
 )
-try:
-    from homeassistant.components.vacuum import StateVacuumEntity
-except ImportError:
-    from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
-    
-from homeassistant.components.vacuum import VacuumEntityFeature
+
+#try:
+#    from homeassistant.components.vacuum import StateVacuumEntity
+#except ImportError:
+#    from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
+#    
+#from homeassistant.components.vacuum import VacuumEntityFeature
 
 from . import ECOVACS_DEVICES
 
