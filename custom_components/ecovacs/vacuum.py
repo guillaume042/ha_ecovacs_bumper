@@ -7,7 +7,25 @@ from typing import Any
 #sucks
 from . import sucks
 
-from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
+#from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
+
+from homeassistant.components.vacuum import (
+    ATTR_STATUS,
+    STATE_CLEANING,
+    STATE_DOCKED,
+    STATE_ERROR,
+    STATE_IDLE,
+    STATE_PAUSED,
+    STATE_RETURNING,
+    SUPPORT_FAN_SPEED,
+    VacuumEntity,
+)
+try:
+    from homeassistant.components.vacuum import StateVacuumEntity
+except ImportError:
+    from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
+    
+
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.icon import icon_for_battery_level
