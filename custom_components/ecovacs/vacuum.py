@@ -15,27 +15,6 @@ from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import ECOVACS_DEVICES
 
-from homeassistant.components.vacuum import (
-    ATTR_STATUS,
-    STATE_CLEANING,
-    STATE_DOCKED,
-    STATE_ERROR,
-    STATE_IDLE,
-    STATE_PAUSED,
-    STATE_RETURNING,
-    SUPPORT_FAN_SPEED,
-    VacuumEntity,
-)
-
-#try:
-#    from homeassistant.components.vacuum import StateVacuumEntity
-#except ImportError:
-#    from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
-#    
-#from homeassistant.components.vacuum import VacuumEntityFeature
-
-
-
 _LOGGER = logging.getLogger(__name__)
 
 ATTR_ERROR = "error"
