@@ -30,7 +30,7 @@ try:
 except ImportError:
     from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
     
-
+from homeassistant.components.vacuum import VacuumEntityFeature
 
 from . import ECOVACS_DEVICES
 
