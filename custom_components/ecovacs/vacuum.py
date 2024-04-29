@@ -107,9 +107,9 @@ class EcovacsVacuum(StateVacuumEntity):
     @property
     def state(self):
         try:
-            return STATE_MAP[self.device.vacuum_status]
+            return self.device.vacuum_status
         except KeyError:
-            return STATE_ERROR
+            return 'error'
     
     @property
     def status(self) -> str | None:
