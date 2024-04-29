@@ -20,18 +20,6 @@ _LOGGER = logging.getLogger(__name__)
 ATTR_ERROR = "error"
 ATTR_COMPONENT_PREFIX = "component_"
 
-STATE_MAP = {
-    "cleaning": STATE_CLEANING,
-    "auto": STATE_CLEANING,
-    "spot_area": STATE_CLEANING,
-    "charging": STATE_DOCKED,
-    "idle": STATE_DOCKED,
-    "pause": STATE_PAUSED,
-    "returning": STATE_RETURNING,
-    "stop": STATE_IDLE,
-}
-
-
 async def async_setup_platform(
     hass: HomeAssistant,
     config: ConfigType,
