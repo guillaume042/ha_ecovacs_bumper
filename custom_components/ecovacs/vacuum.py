@@ -6,6 +6,11 @@ from typing import Any
 
 #sucks
 from . import sucks
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.icon import icon_for_battery_level
+from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
+
 
 #from homeassistant.components.vacuum import StateVacuumEntity, VacuumEntityFeature
 
@@ -26,10 +31,6 @@ except ImportError:
     from homeassistant.components.vacuum import StateVacuumDevice as StateVacuumEntity
     
 
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.icon import icon_for_battery_level
-from homeassistant.helpers.typing import ConfigType, DiscoveryInfoType
 
 from . import ECOVACS_DEVICES
 
